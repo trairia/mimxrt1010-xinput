@@ -1,0 +1,6 @@
+probes:
+  022700000462cbc100000000000000000000000097969905:
+    target_override: mimxrt1010
+
+autounlock: false
+enable_swv: 1
