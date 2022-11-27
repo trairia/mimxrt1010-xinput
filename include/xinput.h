@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __USB_HID_MOUSE_H__
-#define __USB_HID_MOUSE_H__
+#ifndef __USB_HID_XINPUT_H__
+#define __USB_HID_XINPUT_H__
 
 /*******************************************************************************
  * Definitions
@@ -37,7 +37,7 @@
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
-#define USB_HID_XINPUT_REPORT_LENGTH (0x04U)
+#define USB_HID_XINPUT_REPORT_LENGTH (0x14U)
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
 /*! @brief USB DCD charging detect status */
 typedef enum _usb_device_dcd_dev_status
@@ -51,7 +51,7 @@ typedef enum _usb_device_dcd_dev_status
     kUSB_DeviceDCDDectionFinished,
 } usb_device_dcd_dev_status_t;
 #endif
-typedef struct _usb_hid_mouse_struct
+typedef struct _usb_hid_xinput_struct
 {
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
@@ -71,7 +71,7 @@ typedef struct _usb_hid_mouse_struct
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
     usb_device_dcd_dev_status_t dcdDectionStatus;
 #endif
-} usb_hid_mouse_struct_t;
+} usb_hid_xinput_struct_t;
 
 /*******************************************************************************
  * API

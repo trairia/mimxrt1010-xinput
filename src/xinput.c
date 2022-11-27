@@ -75,15 +75,15 @@ static void USB_DeviceApplicationInit(void);
 #define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
 uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_XInputBuffer[USB_HID_XINPUT_REPORT_LENGTH];
-usb_hid_mouse_struct_t g_UsbDeviceHidXInput;
+usb_hid_xinput_struct_t g_UsbDeviceHidXInput;
 
 extern usb_device_class_struct_t g_UsbDeviceHidXInputConfig;
 
 /* Set class configurations */
 usb_device_class_config_struct_t g_UsbDeviceHidConfig[1] = {{
-    USB_DeviceHidXInputCallback, /* HID mouse class callback pointer */
+    USB_DeviceHidXInputCallback, /* HID XInput class callback pointer */
     (class_handle_t)NULL,       /* The HID class handle, This field is set by USB_DeviceClassInit */
-    &g_UsbDeviceHidXInputConfig, /* The HID mouse configuration, including class code, subcode, and protocol, class type,
+    &g_UsbDeviceHidXInputConfig, /* The HID XInput configuration, including class code, subcode, and protocol, class type,
                            transfer type, endpoint address, max packet size, etc.*/
 }};
 
@@ -491,7 +491,7 @@ static void USB_DeviceApplicationInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    /* Set HID mouse to default state */
+    /* Set HID xinput to default state */
     g_UsbDeviceHidXInput.speed        = USB_SPEED_FULL;
     g_UsbDeviceHidXInput.attach       = 0U;
     g_UsbDeviceHidXInput.hidHandle    = (class_handle_t)NULL;
@@ -502,7 +502,7 @@ static void USB_DeviceApplicationInit(void)
     if (kStatus_USB_Success !=
         USB_DeviceClassInit(CONTROLLER_ID, &g_UsbDeviceHidConfigList, &g_UsbDeviceHidXInput.deviceHandle))
     {
-        usb_echo("USB device mouse failed\r\n");
+        usb_echo("USB device xinput failed\r\n");
         return;
     }
     else
@@ -512,7 +512,7 @@ static void USB_DeviceApplicationInit(void)
      (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U)))
         usb_echo("USB device DCD + HID mouse demo\r\n");
 #else
-        usb_echo("USB device HID mouse demo\r\n");
+        usb_echo("USB device XInput demo\r\n");
 #endif
         /* Get the HID mouse class handle */
         g_UsbDeviceHidXInput.hidHandle = g_UsbDeviceHidConfigList.config->classHandle;
@@ -535,7 +535,7 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceRun(g_UsbDeviceHidXInput.deviceHandle);
 #endif
 #else
-    /* Start USB device HID mouse */
+    /* Start USB device XInput */
     /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
     SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceHidXInput.deviceHandle);
