@@ -107,9 +107,6 @@ usb_status_t USB_DeviceGetHidReportDescriptor(usb_device_handle handle,
 usb_status_t USB_DeviceGetHidPhysicalDescriptor(usb_device_handle handle,
                                                 usb_device_get_hid_physical_descriptor_struct_t *hidPhysicalDescriptor);
 
-usb_status_t USB_DeviceGetBosDescriptor(usb_device_handle,
-                                        usb_device_get_bos_descriptor_struct_t* bos_descriptor);
-
-usb_status_t USB_DeviceGetOSFeatureDescriptor(usb_device_handle,
-                                              usb_device_control_request_struct_t* req);
+/* Handle Vendor Request*/
+usb_status_t USB_DeviceHandleVendorRequest(usb_device_handle handle, usb_device_control_request_struct_t* req);
 #endif /* __USB_DEVICE_DESCRIPTOR_H__ */

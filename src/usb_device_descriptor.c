@@ -601,8 +601,12 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
     return kStatus_USB_Success;
 }
 
-usb_status_t USB_DeviceGetOSFeatureDescriptor(usb_device_handle handle, usb_device_control_request_struct_t* request){
-    request->buffer = (uint8_t*)extended_compat_id;
-    request->length = sizeof(extended_compat_id);
+
+usb_status_t USB_DeviceHandleVendorRequest(usb_device_handle handle, usb_device_control_request_struct_t* req){
+    if (req->setup->bRequest == OS_STRING_DESCRIPTOR_VENDOE_CODE){
+        req->buffer = (uint8_t*)extended_compat_id;
+        req->length = sizeof(extended_compat_id);
+        return kStatus_USB_Success;
+    }
     return kStatus_USB_Success;
 }
