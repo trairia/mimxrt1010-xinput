@@ -3,4 +3,3 @@ probes:
     target_override: mimxrt1010
 
 autounlock: false
-enable_swv: 1
