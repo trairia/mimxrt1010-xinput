@@ -64,7 +64,7 @@ void USB_DeviceDisconnected(void);
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
 extern void HW_TimerControl(uint8_t enable);
 #endif
-static usb_status_t USB_DeviceHidXInputAction(void);
+//static usb_status_t USB_DeviceHidXInputAction(void);
 static usb_status_t USB_DeviceHidXInputCallback(class_handle_t handle, uint32_t event, void *param);
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
 static void USB_DeviceApplicationInit(void);
@@ -74,7 +74,8 @@ static void USB_DeviceApplicationInit(void);
  ******************************************************************************/
 #define TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)
 uint32_t g_halTimerHandle[(HAL_TIMER_HANDLE_SIZE + 3) / 4];
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_XInputBuffer[USB_HID_XINPUT_REPORT_LENGTH];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_XInputBuffer[USB_HID_XINPUT_REPORT_LENGTH];
 usb_hid_xinput_struct_t g_UsbDeviceHidXInput;
 
 extern usb_device_class_struct_t g_UsbDeviceHidXInputConfig;
@@ -163,6 +164,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
 #endif
 
 /* Update mouse pointer location. Draw a rectangular rotation*/
+#if 0
 static usb_status_t USB_DeviceHidXInputAction(void)
 {
     static uint8_t x = 0U;
@@ -226,7 +228,7 @@ static usb_status_t USB_DeviceHidXInputAction(void)
     return USB_DeviceHidSend(g_UsbDeviceHidXInput.hidHandle, USB_HID_XINPUT_ENDPOINT_IN, g_UsbDeviceHidXInput.buffer,
                              USB_HID_XINPUT_REPORT_LENGTH);
 }
-
+#endif
 /* The hid class callback */
 static usb_status_t USB_DeviceHidXInputCallback(class_handle_t handle, uint32_t event, void *param)
 {
@@ -244,7 +246,7 @@ static usb_status_t USB_DeviceHidXInputCallback(class_handle_t handle, uint32_t 
                 {
                     return error;
                 }
-                error = USB_DeviceHidXInputAction();
+                //error = USB_DeviceHidXInputAction();
             }
             break;
         case kUSB_DeviceHidEventGetReport:
@@ -358,7 +360,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 /* Set device configuration request */
                 g_UsbDeviceHidXInput.attach               = 1U;
                 g_UsbDeviceHidXInput.currentConfiguration = *temp8;
-                error                                    = USB_DeviceHidXInputAction();
+                //error                                    = USB_DeviceHidXInputAction();
             }
             else
             {
@@ -378,7 +380,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                         g_UsbDeviceHidXInput.currentInterfaceAlternateSetting[interface] = alternateSetting;
                         if (alternateSetting == 0U)
                         {
-                            error = USB_DeviceHidXInputAction();
+                            //error = USB_DeviceHidXInputAction();
                         }
                     }
                 }
@@ -428,7 +430,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             break;
         case kUSB_DeviceEventVendorRequest:
             if (NULL != param) {
-                error = USB_DeviceGetOSFeatureDescriptor(handle, (usb_device_control_request_struct_t*)param);
+                error = USB_DeviceHandleVendorRequest(handle, (usb_device_control_request_struct_t*)param);
             }
             break;
 #if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
@@ -497,6 +499,8 @@ static void USB_DeviceApplicationInit(void)
     g_UsbDeviceHidXInput.hidHandle    = (class_handle_t)NULL;
     g_UsbDeviceHidXInput.deviceHandle = NULL;
     g_UsbDeviceHidXInput.buffer       = s_XInputBuffer;
+    memset(s_XInputBuffer, 0x00, 20);
+    s_XInputBuffer[1] = 0x14;
 
     /* Initialize the usb stack and class drivers */
     if (kStatus_USB_Success !=
