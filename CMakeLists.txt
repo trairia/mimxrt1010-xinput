@@ -62,7 +62,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/src/pin_mux.c"
 "${ProjDirPath}/src/usb_device_ch9.c"
 "${ProjDirPath}/src/usb_device_class.c"
-"${ProjDirPath}/src/usb_device_hid.c"
+"${ProjDirPath}/src/usb_device_xinput.c"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
