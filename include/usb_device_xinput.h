@@ -19,7 +19,7 @@
  ******************************************************************************/
 
 /*! @brief The class code of the HID class */
-#define USB_DEVICE_CONFIG_HID_CLASS_CODE (0x03U)
+#define USB_DEVICE_CONFIG_HID_CLASS_CODE (0xFFU)
 
 /*! @brief Request code to get report of HID class. */
 #define USB_DEVICE_HID_REQUEST_GET_REPORT (0x01U)
