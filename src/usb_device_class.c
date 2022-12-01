@@ -16,7 +16,7 @@
 #if ((defined(USB_DEVICE_CONFIG_NUM)) && (USB_DEVICE_CONFIG_NUM > 0U))
 /* Include the class drivers according to the usb_device_config.h. */
 #if ((defined(USB_DEVICE_CONFIG_HID)) && (USB_DEVICE_CONFIG_HID > 0U))
-#include "usb_device_hid.h"
+#include "usb_device_xinput.h"
 #endif
 
 #if ((defined(USB_DEVICE_CONFIG_CDC_ACM)) && (USB_DEVICE_CONFIG_CDC_ACM > 0U))

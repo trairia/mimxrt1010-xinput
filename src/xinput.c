@@ -13,7 +13,7 @@
 #include "usb_device.h"
 
 #include "usb_device_class.h"
-#include "usb_device_hid.h"
+#include "usb_device_xinput.h"
 #include "usb_device_ch9.h"
 #include "usb_device_descriptor.h"
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \

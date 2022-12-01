@@ -13,7 +13,7 @@
 #include "usb_device_class.h"
 
 #if ((defined(USB_DEVICE_CONFIG_HID)) && (USB_DEVICE_CONFIG_HID > 0U))
-#include "usb_device_hid.h"
+#include "usb_device_xinput.h"
 
 /*******************************************************************************
  * Definitions
